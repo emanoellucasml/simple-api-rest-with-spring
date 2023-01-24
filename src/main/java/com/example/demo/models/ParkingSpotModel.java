@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "dadsdsd")
-public class ParkinSpotModel implements Serializable {
+@Table(name = "TB_PARKING_SPOT")
+public class ParkingSpotModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id

@@ -4,6 +4,7 @@ import com.example.demo.dtos.PartkingSpotDTO;
 import com.example.demo.models.ParkingSpotModel;
 import com.example.demo.services.ParkingSpotService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -93,17 +94,10 @@ public class ParkingSpotController {
                     .body("Parking Spot not found");
         }
 
-        var parkingSpotModel = parkingSpotModelOptional.get();
-        parkingSpotModel.setParkingSpotNumber(parkingSpotDto.getParkingSpotNumber());
-        parkingSpotModel.setModelCar(parkingSpotDto.getModelCar());
-        parkingSpotModel.setApartment(parkingSpotDto.getApartment());
-        parkingSpotModel.setBlock(parkingSpotDto.getBlock());
-        parkingSpotModel.setColorCar(parkingSpotDto.getColorCar());
-        parkingSpotModel.setBrandCar(parkingSpotDto.getBrandCar());
-        parkingSpotModel.setResponsibleName(parkingSpotDto.getResponsibleName());
-        parkingSpotModel.setLicensePlateCar(parkingSpotDto.getLicensePlateCar());
-
-        parkingSpotService.save(parkingSpotModel);
+        var parkingSpotModel = new ParkingSpotModel();
+        BeanUtils.copyProperties(parkingSpotDto, parkingSpotModel);
+        parkingSpotModel.setId(parkingSpotModelOptional.get().getId());
+        parkingSpotModel.setRegistrationDate(parkingSpotModelOptional.get().getRegistrationDate());
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(parkingSpotService.save(parkingSpotModel));
